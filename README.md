@@ -8,34 +8,36 @@ React组件、下拉刷新上拉加载更多、PC端移动端支持
 
 ## 1. 安装
 
+````bash
 npm install --save iscroll-luo
-
+````
 
 # 2. 使用
 
-import React from 'react';<br>
-import IscrollLuo from 'iscroll-luo';<br>
+````bash
+import React from 'react';
+import IscrollLuo from 'iscroll-luo';
 
-class Test extends React.Component {<br>
-  constructor(props) {<br>
-    super(props);<br>
-    this.state = {<br>
-    	data: [1, 2, 3],<br>
-	};<br>
-  }<br>
-<br>
-  onDown() {<br>
-  	this.setState({<br>
-  		data: [1, 2, 3],<br>
-  	});<br>
-  }<br>
-<br>
-  onUp() {<br>
-  	this.setState({<br>
-  		data: [...this.state.data, 1, 2, 3],<br>
-  	});<br>
-  }<br>
-<br>
+class Test extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+    	data: [1, 2, 3],
+	};
+  }
+
+  onDown() {
+  	this.setState({
+  		data: [1, 2, 3],
+  	});
+  }
+
+  onUp() {
+  	this.setState({
+  		data: [...this.state.data, 1, 2, 3],
+  	});
+  }
+
   render() {
   	return (
   		<div style={{ height: '500px' }}>				// 外层务必包裹一个具备高度的容器
@@ -54,6 +56,7 @@ class Test extends React.Component {<br>
   	);
   }
 }
+````
 
 # 3. 参数
 
