@@ -4,14 +4,16 @@ React组件、下拉刷新上拉加载更多、PC端移动端支持
 
 基于iscroll
 
+---
+
 # 1. 安装
 
 npm install --save iscroll-luo
 
 # 2. 使用
 
-import React from 'react';
-import IscrollLuo from 'iscroll-luo';
+import React from 'react';<br>
+import IscrollLuo from 'iscroll-luo';<br>
 
 class Test extends React.Component {
   constructor(props) {
