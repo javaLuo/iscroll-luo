@@ -83,3 +83,12 @@ options: {				# 可选 object	自定义参数
 传入iscroll-luo中的数据改变时，即this.props.children改变时，
 iscroll-luo认为已经成功刷新或成功加载更多了，iscroll-luo会刷新内部状态
 
+## 5. 演示案例
+
+http://isluo.com/iscroll-luo/home
+
+## 6. 参考
+
+iscroll官网： http://cubiq.org/iscroll-5 <br />
+iscroll中文API文档： http://www.cnblogs.com/leolai/articles/4204345.html
+
