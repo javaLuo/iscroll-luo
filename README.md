@@ -6,7 +6,7 @@ React组件、下拉刷新上拉加载更多、PC端移动端支持
 
 # 1. 安装
 
-npm install --save iscroll
+npm install --save iscroll-luo
 
 # 2. 使用
 
@@ -70,3 +70,9 @@ options: {
     pullupInfo: '加载更多',				// 上拉加载的文字
     pullupingInfo: '加载中…'			// 加载中的文字
 }
+
+# 4. 一些原理
+
+传入iscroll-luo中的数据改变时，即this.props.children改变时，
+iscroll-luo认为已经成功刷新或成功加载更多了，iscroll-luo会刷新内部状态
+
