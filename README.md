@@ -80,7 +80,7 @@ options: {				# 可选 object	自定义参数
 
 ## 4. 机制
 
-传入iscroll-luo中的数据改变时，即this.props.children改变时，
+传入iscroll-luo中的数据改变时，即this.props.children改变时，<br/>
 iscroll-luo认为已经成功刷新或成功加载更多了，iscroll-luo会刷新内部状态
 
 ## 5. 演示案例
