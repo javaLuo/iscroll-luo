@@ -85,7 +85,7 @@ iscroll-luo认为已经成功刷新或成功加载更多了，iscroll-luo会刷�
 
 ## 5. 演示案例
 
-http://isluo.com/iscroll-luo/home
+http://isluo.com/iscroll-luo/index.html
 
 ## 6. 参考
 
