@@ -71,9 +71,9 @@ options: {			// 可选 object	自定义参数
 	backgroundColor: '#f5f5f5',	// 背景颜色，是滑动底层的背景颜色
 	fontColor: '#888888', 		// 文字颜色，是下拉刷新、上拉加载那些文字的颜色
 	beyondHeight: 30,		// 超过此长度后触发下拉或上拉,单位px
-	pulldownInfo: '下拉刷新',		// 下拉刷新的文字
+	pulldownInfo: '下拉刷新',	// 下拉刷新的文字
 	pulldowningInfo: '刷新中…',	// 刷新中的文字
-	pullupInfo: '加载更多',		// 上拉加载的文字
+	pullupInfo: '加载更多',	// 上拉加载的文字
 	pullupingInfo: '加载中…',		// 加载中的文字
 }
 ````
