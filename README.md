@@ -73,8 +73,8 @@ options: {			// 可选 object	自定义参数
 	beyondHeight: 30,		// 超过此长度后触发下拉或上拉,单位px
 	pulldownInfo: '下拉刷新',	// 下拉刷新的文字
 	pulldowningInfo: '刷新中…',	// 刷新中的文字
-	pullupInfo: '加载更多',	// 上拉加载的文字
-	pullupingInfo: '加载中…',		// 加载中的文字
+	pullupInfo: '加载更多',		// 上拉加载的文字
+	pullupingInfo: '加载中…',	// 加载中的文字
 }
 ````
 
