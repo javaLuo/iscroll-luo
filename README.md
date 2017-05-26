@@ -83,10 +83,10 @@ options: {				# 可选 object	自定义参数
 
 ## 4. 机制
 
-[x] 传入iscroll-luo中的数据改变时，即this.props.children改变时，<br/>
+[1] 传入iscroll-luo中的数据改变时，即this.props.children改变时，<br/>
 iscroll-luo认为已经成功刷新或成功加载更多了，iscroll-luo会刷新内部状态
 
-[x] iscrollOptions参数中，preventDefault默认设置为false, 因为在IE中需要这么做才能触发滑动。<br/>
+[2] iscrollOptions参数中，preventDefault默认设置为false, 因为在IE中需要这么做才能触发滑动。<br/>
 一般情况都应该设为true
 
 ## 5. 演示案例
