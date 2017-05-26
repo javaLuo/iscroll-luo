@@ -66,7 +66,10 @@ id  					# 必需 string	一个唯一的ID
 onPullDownRefresh			# 可选	func	触发下拉刷新时的回调函数
 onPullUpLoadMore			# 可选	func	触发上拉加载时的回调函数
 className				# 可选 string	额外的class,会添加到iscroll-luo组件的包裹元素上
-iscrollOptions				# 可选 object	iscroll的原生参数，初始化时会作为iscroll的options
+iscrollOptions: {			# 可选 object	iscroll的原生参数，初始化时会作为iscroll的options
+	probeType: 3,			# 不要动此参数，必须设为3
+        preventDefault: false,		# 没有阻止浏览器默认行为，需要的话可以设为true
+}
 options: {				# 可选 object	自定义参数
 	backgroundColor: '#f5f5f5',	# 背景颜色，是滑动底层的背景颜色
 	fontColor: '#888888', 		# 文字颜色，是下拉刷新、上拉加载那些文字的颜色
@@ -80,8 +83,11 @@ options: {				# 可选 object	自定义参数
 
 ## 4. 机制
 
-传入iscroll-luo中的数据改变时，即this.props.children改变时，<br/>
+[x] 传入iscroll-luo中的数据改变时，即this.props.children改变时，<br/>
 iscroll-luo认为已经成功刷新或成功加载更多了，iscroll-luo会刷新内部状态
+
+[x] iscrollOptions参数中，preventDefault默认设置为false, 因为在IE中需要这么做才能触发滑动。<br/>
+一般情况都应该设为true
 
 ## 5. 演示案例
 
