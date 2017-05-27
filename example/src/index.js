@@ -5,7 +5,11 @@ import {render} from 'react-dom';
 
 var element = document.getElementById('box');
 render(
-	<IscrollLuo id="test" detectionHeight={true}>
+	<IscrollLuo id="test"
+		detectionHeight={true}
+		onPullDownRefresh={() => function(){}}
+		onPullUpLoadMore={()=> function(){}}
+	>
 		<div>
 		<div>A123</div>
 		<div>B123</div>

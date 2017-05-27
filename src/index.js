@@ -140,6 +140,7 @@ class IscrollLuo extends React.Component {
 
   /* 组件即将销毁时触发，销毁当前iscroll实例 */
   componentWillUnmount() {
+    window.clearTimeout(this.iscrollTimer);
     this.myScroll.destroy();
   }
 

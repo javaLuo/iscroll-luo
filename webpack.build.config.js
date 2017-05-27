@@ -61,14 +61,12 @@ module.exports = {
     },
     // 第3方插件配置
     plugins: [
-    // 相当于命令参数 --optimize-dedupe 消除冗余的或重复的代码
-    new webpack.optimize.DedupePlugin(),
     // http://webpack.github.io/docs/list-of-plugins.html#uglifyjsplugin
     //用来优化生成的代码 chunk,合并相同的代码
     new webpack.optimize.AggressiveMergingPlugin(),
 
     //用来保证编译过程不出错
-    new webpack.NoErrorsPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
     // Uglify 加密压缩源代码
     new webpack.optimize.UglifyJsPlugin({
         output: {

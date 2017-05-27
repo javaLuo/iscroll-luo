@@ -13,7 +13,7 @@
 .iscroll-luo-box .sl_scroller .scroller-pullDown .icon img,.iscroll-luo-box .sl_scroller .scroller-pullUp .icon img{width:12px;}
 
 .iscroll-luo-box .sl_down{position:absolute;width:100%;top:0;height:25px;line-height:25px;text-align:center;color:#fff;font-size:12px;z-index:99;-webkit-transform:translateY(-25px);transform:translateY(-25px);-webkit-transition:-webkit-transform 200ms;transition:transform 200ms;}
-.iscroll-luo-box .sl_down>img{height:12px;margin-right:4px;-webkit-transform: translateY(1px);transform: translateY(1px);}
+.iscroll-luo-box .sl_down>img{height:12px;margin-right:4px;-webkit-transform: translateY(2px);transform: translateY(2px);}
 .iscroll-luo-box .sl_up{position:absolute;width:100%;bottom:0;height:25px;line-height:25px;text-align:center;color:#fff;font-size:12px;z-index:99;-webkit-transform:translateY(25px);transform:translateY(25px);-webkit-transition:-webkit-transform 200ms;transition:transform 200ms;}
-.iscroll-luo-box .sl_up>img{height:12px;margin-right:4px;-webkit-transform: translateY(1px);transform: translateY(1px);}
+.iscroll-luo-box .sl_up>img{height:12px;margin-right:4px;-webkit-transform: translateY(2px);transform: translateY(2px);}
 .iscroll-luo-box .sl_show{-webkit-transform:translateY(0);transform:translateY(0);}
