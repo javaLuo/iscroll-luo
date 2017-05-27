@@ -83,8 +83,8 @@ options: {				# 可选 object	自定义参数
 
 ## 4. 机制
 
-[1] 传入iscroll-luo中的数据改变时，即this.props.children改变时，<br/>
-iscroll-luo认为已经成功刷新或成功加载更多了，iscroll-luo会刷新内部状态
+* 传入iscroll-luo中的数据改变时，即this.props.children改变时，<br/>iscroll-luo认为已经成功刷新或成功加载更多了，iscroll-luo会刷新内部状态
+* 参数detectionHeight，设为true后，iscroll-luo会不停的检测容器的高度是否变化，<br/>如果变化了，则调用iscroll的refresh()方法
 
 ## 5. 演示案例
 
