@@ -29,9 +29,11 @@ class IscrollLuo extends React.Component {
         pulldowningInfo: '刷新中…',
         pullupInfo: '加载更多',
         pullupingInfo: '加载中…'
-      }
+      },
+      boxHeight: 0,
     };
     this.timer = null;
+    this.iscrollTimer = null; // 检测高度变化的timer
     this.myScroll = null; // 保存当前iscroll实例
     this.iState = { // 自定义的各种状态
       mousedown: false,
@@ -119,6 +121,10 @@ class IscrollLuo extends React.Component {
     this.setState({
       data: this.props.children,
     });
+
+    if(this.props.detectionHeight) {
+      this.onDetectionHeight();
+    }
   }
 
   /* children内容改变时触发,表示已完成了刷新或加载 */
@@ -137,10 +143,37 @@ class IscrollLuo extends React.Component {
     this.myScroll.destroy();
   }
 
+  /** 循环检测容器高度 **/
+  onDetectionHeight() {
+    const that = this;
+    clearTimeout(that.iscrollTimer);
+    that.iscrollTimer = setTimeout(function(){
+      that.iscrollTimeout(that);
+   }, 500);
+  }
+
+  iscrollTimeout(me) {
+    const dom = me.refs.docStatus;
+    if(dom && dom.offsetHeight !== me.state.boxHeight) {
+      me.setState({
+        boxHeight: dom.offsetHeight,
+      });
+      me.myScroll.refresh();
+    }
+    me.iscrollHeightChange();
+  }
+
+ iscrollHeightChange() {
+    const me = this;
+    clearTimeout(me.iscrollTimer);
+    me.iscrollTimer = setTimeout(function(){
+      me.iscrollTimeout(me);
+   }, 700);
+  }
+
   /** 刷新ISCROLL **/
   onRefresh() {
     const myScroll = this.myScroll;
-    console.log('是什么；', this, myScroll);
     window.clearTimeout(this.timerRefresh);
     this.timerRefresh = window.setTimeout(() => {
       myScroll.refresh();
@@ -192,6 +225,7 @@ class IscrollLuo extends React.Component {
     return (
       <div
         id={this.props.id}
+        ref="docStatus"
         className={this.props.className ? `iscroll-luo-box ${this.props.className}` : 'iscroll-luo-box'}
         style={{ backgroundColor: this.state.options.backgroundColor }}
         onMouseDown={() => this.onMouseDown()}
@@ -225,13 +259,14 @@ class IscrollLuo extends React.Component {
 }
 
 IscrollLuo.propTypes = {
-  id: PropTypes.string,
-  children: PropTypes.object,
-  options: PropTypes.object,
-  iscrollOptions: PropTypes.object,
-  className: PropTypes.string,
-  onPullDownRefresh: PropTypes.func, // 下拉刷新
-  onPullUpLoadMore: PropTypes.func, // 上拉加载更多
+  id: PropTypes.string,                 // id
+  children: PropTypes.object,           // 数据
+  options: PropTypes.object,            // 自定义参数
+  iscrollOptions: PropTypes.object,     // iscroll原生参数
+  detectionHeight: PropTypes.bool,   // 是否不停的检测高度变化
+  className: PropTypes.string,          // 额外的class
+  onPullDownRefresh: PropTypes.func,    // 下拉刷新
+  onPullUpLoadMore: PropTypes.func,     // 上拉加载更多
 };
 
 export default IscrollLuo;

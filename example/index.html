@@ -8,7 +8,16 @@
     </style>
 </head>
 <body>
-	<div id="box" class="box">123</div>
+	<div id="box" class="box"></div>
+	<button onClick="heightChange()">高度变化</button>
 </body>
 <script src="bundle.js"></script>
+<script>
+	var testHeight = 400;
+	function heightChange() {
+		testHeight = testHeight == 400 ? 600 : 400;
+		document.getElementById('box').style.height = testHeight+'px';
+
+	}
+</script>
 </html>
