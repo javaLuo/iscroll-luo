@@ -69,15 +69,18 @@ className				# 可选 string	额外的class,会添加到iscroll-luo组件的包�
 detectionHeight       			# 可选 bool 	是否自动检测容器高度变化 默认false
 iscrollOptions: {			# 可选 object	iscroll的原生参数，初始化时会作为iscroll的options
 	probeType: 3,			# 不要动此参数，必须设为3
+	preventDefault: false,		# 为了解决Chrome和IE中的事件触发差异，该参数设置为了false
 }
 options: {				# 可选 object	自定义参数
 	backgroundColor: '#f5f5f5',	# 背景颜色，是滑动底层的背景颜色
 	fontColor: '#888888', 		# 文字颜色，是下拉刷新、上拉加载那些文字的颜色
 	beyondHeight: 30,		# 超过此长度后触发下拉或上拉,单位px
 	pulldownInfo: '下拉刷新',	# 下拉刷新的文字
-	pulldowningInfo: '刷新中…',	# 刷新中的文字
+	pulldownReadyInfo: '松开刷新',	# 触发下拉刷新的文字
+	pulldowningInfo: '刷新中…',	# 正在刷新中的文字
 	pullupInfo: '加载更多',		# 上拉加载的文字
-	pullupingInfo: '加载中…',	# 加载中的文字
+	pullupReadyInfo: '松开加载',	# 触发上拉加载的文字
+	pullupingInfo: '加载中…',	# 正在加载中的文字
 }
 ````
 
