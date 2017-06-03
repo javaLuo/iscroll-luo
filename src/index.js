@@ -26,21 +26,42 @@ class IscrollLuo extends React.Component {
         fontColor: '#888888', // 文字颜色
         beyondHeight: 30, // 超过此长度后触发下拉或上拉,单位px
         pulldownInfo: '下拉刷新',
+        pulldownReadyInfo: '松开刷新',
         pulldowningInfo: '刷新中…',
         pullupInfo: '加载更多',
-        pullupingInfo: '加载中…'
+        pullupReadyInfo: '松开加载',
+        pullupingInfo: '加载中…',
       },
       boxHeight: 0,
     };
-    this.timer = null;
+    this.timerRefresh = null; // 刷新iscroll的延时timer
     this.iscrollTimer = null; // 检测高度变化的timer
     this.myScroll = null; // 保存当前iscroll实例
-    this.iState = { // 自定义的各种状态
-      mousedown: false,
-      mouseenter: false,
-      pulldowntype: false,
-      pulluptype: false,
-    };
+    this.onMouseUpListener = {
+      me: this,
+      handleEvent: function(e) {
+        const t = this.me;
+        window.top.removeEventListener('mouseup', this, false);
+        window.top.removeEventListener('touchend', this, false);
+        if(t.myScroll.y >= t.state.options.beyondHeight) {
+          if(t.props.onPullDownRefresh) {
+            t.setState({
+              loadingDownShow: true,
+              loadingUpShow: false,
+            });
+            t.props.onPullDownRefresh();
+          }
+        } else if (t.myScroll.y < t.myScroll.maxScrollY - t.state.options.beyondHeight) {
+          if(t.props.onPullUpLoadMore) {
+            t.setState({
+              loadingDownShow: false,
+              loadingUpShow: true,
+            });
+            t.props.onPullUpLoadMore();
+          }
+        }
+      }
+    }
   }
 
   // 组件挂载完毕之前触发 初始化一些参数
@@ -60,62 +81,32 @@ class IscrollLuo extends React.Component {
   // 组件初始化完毕时触发
   componentDidMount() {
     this.myScroll = new IScroll(`#${this.props.id}_warpper`, this.state.iscrollOptions);
-    this.myScroll.on('scroll', () => {
 
+    this.myScroll.on('scroll', () => {
       const myScroll = this.myScroll;
 
       if(myScroll.y >= this.state.options.beyondHeight && !this.state.yesDown) {
         this.setState({
           yesDown: true,
         });
-        this.iState.pulldowntype = true;
       } else if (myScroll.y > 0 && myScroll.y < this.state.options.beyondHeight && this.state.yesDown) {
         this.setState({
           yesDown: false,
         });
-        if(!this.iState.mousedown) {
-          this.iState.pulldowntype = false;
-        }
       } else if (myScroll.y < myScroll.maxScrollY && myScroll.y > myScroll.maxScrollY - this.state.options.beyondHeight && this.state.yesUp) {
         this.setState({
           yesUp: false,
         });
-        if(!this.iState.mousedown) {
-          this.iState.pulluptype = false;
-        }
       } else if (myScroll.y < myScroll.maxScrollY - this.state.options.beyondHeight && !this.state.yesUp) {
         this.setState({
           yesUp: true,
         });
-        this.iState.pulluptype = true;
       }
     });
 
-    this.myScroll.on('scrollEnd', () => {
-      const myScroll = this.myScroll;
-      if(this.iState.mouseenter) {
-        return;
-      }
-      if(this.iState.pulldowntype) {
-        if(this.props.onPullDownRefresh) {
-          this.setState({
-            loadingDownShow: true,
-            loadingUpShow: false,
-          });
-          this.iState.pulldowntype = false;
-          this.props.onPullDownRefresh();
-        }
-      } else if (this.iState.pulluptype) {
-        if(this.props.onPullUpLoadMore) {
-          this.setState({
-            loadingDownShow: false,
-            loadingUpShow: true,
-            pulluptype: false,
-          });
-          this.iState.pulluptype = false;
-          this.props.onPullUpLoadMore();
-        }
-      }
+    this.myScroll.on('scrollStart', () => {
+      window.top.addEventListener('mouseup', this.onMouseUpListener, false);
+      window.top.addEventListener('touchend', this.onMouseUpListener, false);
     });
 
     this.setState({
@@ -181,47 +172,6 @@ class IscrollLuo extends React.Component {
     }, 200);
   }
 
-  onMouseDown() {
-    console.log('mouseDOwn了');
-    this.iState.mousedown = true;
-  }
-
-  onMouseUp() {
-    console.log('触发几次');
-    if(!this.iState.mousedown) {
-      return;
-    }
-
-    this.iState.mousedown = false;
-
-    const myScroll = this.myScroll;
-    if(myScroll.y >= this.state.options.beyondHeight) {
-      if(this.props.onPullDownRefresh) {
-        this.setState({
-          loadingDownShow: true,
-          loadingUpShow: false,
-        });
-        this.props.onPullDownRefresh();
-      }
-    } else if (myScroll.y < myScroll.maxScrollY - this.state.options.beyondHeight) {
-      if(this.props.onPullUpLoadMore) {
-        this.setState({
-          loadingDownShow: false,
-          loadingUpShow: true,
-        });
-        this.props.onPullUpLoadMore();
-      }
-    }
-  }
-
-  onMouseover() {
-    this.iState.mouseenter = true;
-  }
-
-  onMouseLeave() {
-    this.iState.mouseenter = false;
-  }
-
   render() {
     return (
       <div
@@ -229,31 +179,39 @@ class IscrollLuo extends React.Component {
         ref="docStatus"
         className={this.props.className ? `iscroll-luo-box ${this.props.className}` : 'iscroll-luo-box'}
         style={{ backgroundColor: this.state.options.backgroundColor }}
-        onMouseDown={() => this.onMouseDown()}
-        onMouseUp={() => this.onMouseUp()}
-        onTouchStart={() => this.onMouseDown()}
-        onTouchEnd={() => this.onMouseUp()}
-        onMouseEnter={() => this.onMouseover()}
-        onMouseLeave={() => this.onMouseLeave()}
       >
-        <div className={this.state.loadingDownShow ? 'sl_down sl_show' : 'sl_down'} style={{ backgroundColor: this.state.options.backgroundColor, color: this.state.options.fontColor }}><img src={iconLoading} />{this.state.options.pulldowningInfo}</div>
+        <div className={this.state.loadingDownShow ? 'sl_down sl_show' : 'sl_down'} style={{ backgroundColor: this.state.options.backgroundColor, color: this.state.options.fontColor }}>
+          <img src={iconLoading} />
+          {this.state.options.pulldowningInfo}
+        </div>
         <div
           id={`${this.props.id}_warpper`}
           className="sl_scroller"
         >
           <div>
             <div className="scroller-pullDown">
-              <span className={this.state.yesDown ? 'icon reverse_icon' : 'icon'}><img src={iconSldown} /></span>
-              <span className = "msg" style={{ color: this.state.options.fontColor }}>{this.state.options.pulldownInfo}</span>
+              <span className={this.state.yesDown ? 'icon reverse_icon' : 'icon'}>
+                <img src={iconSldown} />
+              </span>
+              <span className = "msg" style={{ color: this.state.options.fontColor }}>
+                {this.state.yesDown ? this.state.options.pulldownReadyInfo : this.state.options.pulldownInfo}
+              </span>
             </div>
             <div className="scroller-content">{this.state.data}</div>
             <div className="scroller-pullUp">
-              <span className={this.state.yesUp ? 'icon reverse_icon' : 'icon'}><img src={iconSlup} /></span>
-              <span className = "msg" style={{ color: this.state.options.fontColor }}>{this.state.options.pullupInfo}</span>
+              <span className={this.state.yesUp ? 'icon reverse_icon' : 'icon'}>
+                <img src={iconSlup} />
+              </span>
+              <span className = "msg" style={{ color: this.state.options.fontColor }}>
+                {this.state.yesUp ? this.state.options.pullupReadyInfo : this.state.options.pullupInfo}
+              </span>
             </div>
           </div>
         </div>
-        <div className={this.state.loadingUpShow ? 'sl_up sl_show' : 'sl_up'} style={{ backgroundColor: this.state.options.backgroundColor, color: this.state.options.fontColor }}><img src={iconLoading} />{this.state.options.pullupingInfo}</div>
+        <div className={this.state.loadingUpShow ? 'sl_up sl_show' : 'sl_up'} style={{ backgroundColor: this.state.options.backgroundColor, color: this.state.options.fontColor }}>
+          <img src={iconLoading} />
+          {this.state.options.pullupingInfo}
+        </div>
       </div>
     );
   }

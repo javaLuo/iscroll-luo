@@ -1,41 +1,55 @@
 import React from 'react';
 import IscrollLuo from '../../dist/index.js';
-import {render} from 'react-dom';
+import ReactDom from 'react-dom';
 
+class Test extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+    	data: [1,2,3],
+    };
+  }
 
-var element = document.getElementById('box');
-render(
-	<IscrollLuo id="test"
-		detectionHeight={true}
-		onPullDownRefresh={() => function(){}}
-		onPullUpLoadMore={()=> function(){}}
-	>
-		<div>
-		<div>A123</div>
-		<div>B123</div>
-		<div>C123</div>
-		<div>D123</div>
-		<div>E123</div>
-		<div>F123</div>
-		<div>A123</div>
-		<div>B123</div>
-		<div>C123</div>
-		<div>D123</div>
-		<div>E123</div>
-		<div>F123</div>
-		<div>A123</div>
-		<div>B123</div>
-		<div>C123</div>
-		<div>D123</div>
-		<div>E123</div>
-		<div>F123</div>
-		<div>A123</div>
-		<div>B123</div>
-		<div>C123</div>
-		<div>D123</div>
-		<div>E123</div>
-		<div>F123</div>
-		</div>
-	</IscrollLuo>,
-	element
-	);
+  // 组件初始化完毕时触发
+  componentDidMount() {
+  }
+
+  onDown() {
+    const t = this;
+    setTimeout(function(){
+      t.setState({
+        data: [1,2,3]
+      });
+    }, 1000);
+  }
+
+  onUp() {
+    const t = this;
+  	setTimeout(function(){
+      t.setState({
+        data: [...t.state.data,1,2,3]
+      });
+    }, 1000);
+  }
+
+  render() {
+    return (
+        <IscrollLuo id="test"
+			detectionHeight={true}
+			onPullDownRefresh={() => this.onDown()}
+			onPullUpLoadMore={()=> this.onUp()}
+		>
+			<div>
+				{this.state.data.map((v, i) => {
+					return <div key={i}>{v}</div>
+				})}
+			</div>
+		</IscrollLuo>
+    );
+  }
+}
+
+ReactDom.render(
+	<Test />,
+	document.getElementById('box')
+);
