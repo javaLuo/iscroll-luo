@@ -9,6 +9,7 @@ React组件、下拉刷新上拉加载更多、PC端移动端支持
 ## 1. 安装
 
 ````bash
+npm install --save iscroll
 npm install --save iscroll-luo
 ````
 
