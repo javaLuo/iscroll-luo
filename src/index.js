@@ -19,7 +19,8 @@ class IscrollLuo extends React.Component {
       loadingUpShow: false, // 是否属于加载中状态
       iscrollOptions: { // iscroll 所需参数
         probeType: 3,
-        preventDefault: false,
+        preventDefault: true,
+        click: true,
       },
       options: {
         backgroundColor: '#f5f5f5', // 背景颜色
@@ -80,42 +81,42 @@ class IscrollLuo extends React.Component {
 
   // 组件初始化完毕时触发
   componentDidMount() {
-    this.myScroll = new IScroll(`#${this.props.id}_warpper`, this.state.iscrollOptions);
+      this.myScroll = new IScroll(`#${this.props.id}_warpper`, Object.assign({}, this.state.iscrollOptions, this.props.iscrollOptions));
 
-    this.myScroll.on('scroll', () => {
-      const myScroll = this.myScroll;
+      this.myScroll.on('scroll', () => {
+        const myScroll = this.myScroll;
 
-      if(myScroll.y >= this.state.options.beyondHeight && !this.state.yesDown) {
-        this.setState({
-          yesDown: true,
-        });
-      } else if (myScroll.y > 0 && myScroll.y < this.state.options.beyondHeight && this.state.yesDown) {
-        this.setState({
-          yesDown: false,
-        });
-      } else if (myScroll.y < myScroll.maxScrollY && myScroll.y > myScroll.maxScrollY - this.state.options.beyondHeight && this.state.yesUp) {
-        this.setState({
-          yesUp: false,
-        });
-      } else if (myScroll.y < myScroll.maxScrollY - this.state.options.beyondHeight && !this.state.yesUp) {
-        this.setState({
-          yesUp: true,
-        });
+        if(myScroll.y >= this.state.options.beyondHeight && !this.state.yesDown) {
+          this.setState({
+            yesDown: true,
+          });
+        } else if (myScroll.y > 0 && myScroll.y < this.state.options.beyondHeight && this.state.yesDown) {
+          this.setState({
+            yesDown: false,
+          });
+        } else if (myScroll.y < myScroll.maxScrollY && myScroll.y > myScroll.maxScrollY - this.state.options.beyondHeight && this.state.yesUp) {
+          this.setState({
+            yesUp: false,
+          });
+        } else if (myScroll.y < myScroll.maxScrollY - this.state.options.beyondHeight && !this.state.yesUp) {
+          this.setState({
+            yesUp: true,
+          });
+        }
+      });
+
+      this.myScroll.on('scrollStart', () => {
+        window.top.addEventListener('mouseup', this.onMouseUpListener, false);
+        window.top.addEventListener('touchend', this.onMouseUpListener, false);
+      });
+
+      this.setState({
+        data: this.props.children,
+      });
+
+      if(this.props.detectionHeight) {
+        this.onDetectionHeight();
       }
-    });
-
-    this.myScroll.on('scrollStart', () => {
-      window.top.addEventListener('mouseup', this.onMouseUpListener, false);
-      window.top.addEventListener('touchend', this.onMouseUpListener, false);
-    });
-
-    this.setState({
-      data: this.props.children,
-    });
-
-    if(this.props.detectionHeight) {
-      this.onDetectionHeight();
-    }
   }
 
   /* children内容改变时触发,表示已完成了刷新或加载 */
@@ -145,7 +146,7 @@ class IscrollLuo extends React.Component {
   }
 
   iscrollTimeout(me) {
-    const dom = me.refs.docStatus;
+    const dom = me.docStatus;
     if(dom && dom.offsetHeight !== me.state.boxHeight) {
       me.setState({
         boxHeight: dom.offsetHeight,
@@ -176,7 +177,7 @@ class IscrollLuo extends React.Component {
     return (
       <div
         id={this.props.id}
-        ref="docStatus"
+        ref={(dom) => this.docStatus = dom}
         className={this.props.className ? `iscroll-luo-box ${this.props.className}` : 'iscroll-luo-box'}
         style={{ backgroundColor: this.state.options.backgroundColor }}
       >
@@ -197,7 +198,7 @@ class IscrollLuo extends React.Component {
                 {this.state.yesDown ? this.state.options.pulldownReadyInfo : this.state.options.pulldownInfo}
               </span>
             </div>
-            <div className="scroller-content">{this.state.data}</div>
+            <div className="scroller-content">{this.props.children}</div>
             <div className="scroller-pullUp">
               <span className={this.state.yesUp ? 'icon reverse_icon' : 'icon'}>
                 <img src={iconSlup} />

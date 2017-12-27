@@ -17,7 +17,8 @@ module.exports = {
 	},
     externals: {
         'react': 'react',
-        'react-dom': 'react-dom'
+        'react-dom': 'react-dom',
+        'iscroll/build/iscroll-probe' : 'iscroll/build/iscroll-probe'
       },
 	// 解析器配置
 	module: {

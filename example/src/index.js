@@ -15,6 +15,7 @@ class Test extends React.Component {
   }
 
   onDown() {
+    console.log('触发了吗111');
     const t = this;
     setTimeout(function(){
       t.setState({
@@ -25,26 +26,27 @@ class Test extends React.Component {
 
   onUp() {
     const t = this;
+    console.log('触发了吗');
   	setTimeout(function(){
       t.setState({
-        data: [...t.state.data,1,2,3]
+        data: [1,2,3,4,5,6]
       });
     }, 1000);
   }
 
   render() {
+    console.log('是个什么：', this.state.data);
     return (
         <IscrollLuo id="test"
-			detectionHeight={true}
-			onPullDownRefresh={() => this.onDown()}
-			onPullUpLoadMore={()=> this.onUp()}
-		>
-			<div>
-				{this.state.data.map((v, i) => {
-					return <div key={i}>{v}</div>
-				})}
-			</div>
-		</IscrollLuo>
+    			onPullDownRefresh={() => this.onDown()}
+    			onPullUpLoadMore={()=> this.onUp()}
+    		>
+  			<div>
+  				{this.state.data.map((v, i) => {
+  					return <div key={i}>{v}</div>
+  				})}
+  			</div>
+  		</IscrollLuo>
     );
   }
 }

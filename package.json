@@ -1,6 +1,6 @@
 {
   "name": "iscroll-luo",
-  "version": "1.0.12",
+  "version": "1.0.17",
   "description": "iscroll for react,pulldown refresh and pullup load more",
   "main": "dist/index.js",
   "scripts": {
@@ -22,21 +22,22 @@
   },
   "homepage": "https://github.com/javaLuo/iscroll-luo#readme",
   "devDependencies": {
-    "babel-core": "^6.24.1",
-    "babel-loader": "^7.0.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-3": "^6.24.1",
-    "css-loader": "^0.28.2",
-    "style-loader": "^0.18.1",
-    "url-loader": "^0.5.8",
-    "webpack": "^2.6.0",
-    "webpack-dev-server": "^2.4.5"
+    "css-loader": "^0.28.7",
+    "file-loader": "^1.1.6",
+    "style-loader": "^0.19.1",
+    "url-loader": "^0.6.2",
+    "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.9.7"
   },
   "dependencies": {
     "iscroll": "^5.2.0",
-    "prop-types": "^15.5.10",
-    "react": "^15.5.4",
-    "react-dom": "^15.5.4"
+    "prop-types": "^15.6.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0"
   }
 }
