@@ -2,7 +2,7 @@
 
 React组件、下拉刷新上拉加载更多、PC端移动端支持
 
-基于iscroll
+依赖 iscroll5
 
 
 
@@ -70,7 +70,8 @@ className				# 可选 string	额外的class,会添加到iscroll-luo组件的包�
 detectionHeight       			# 可选 bool 	是否自动检测容器高度变化 默认false
 iscrollOptions: {			# 可选 object	iscroll的原生参数，初始化时会作为iscroll的options
 	probeType: 3,			# 不要动此参数，必须设为3
-	preventDefault: false,		# 为了解决Chrome和IE中的事件触发差异，该参数设置为了false
+	preventDefault: true,		# 默认禁止浏览器默认事件
+	click: true,			# 默认开启了原生点击事件
 }
 options: {				# 可选 object	自定义参数
 	backgroundColor: '#f5f5f5',	# 背景颜色，是滑动底层的背景颜色
@@ -85,10 +86,11 @@ options: {				# 可选 object	自定义参数
 }
 ````
 
-## 4. 机制
+## 4. 特性
 
 * 传入iscroll-luo中的数据改变时，即this.props.children改变时，<br/>iscroll-luo认为已经成功刷新或成功加载更多了，iscroll-luo会刷新内部状态
-* 参数detectionHeight，设为true后，iscroll-luo会不停的检测容器的高度是否变化，<br/>如果变化了，则调用iscroll的refresh()方法
+* 参数detectionHeight，设为true后，iscroll-luo会不停的检测容器的高度是否变化，<br/>如果变化了，则自动调用iscroll的refresh()方法
+* 在部分安卓手机上如果存在滑不动，或滑动卡顿的现象，请自行设置touch-action:none（写点css通过设置className即可）;
 
 ## 5. 演示案例
 
