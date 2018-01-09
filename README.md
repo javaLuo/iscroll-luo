@@ -44,7 +44,7 @@ class Test extends React.Component {
   render() {
   	return (
 		{/** 务必用一个具有高度的容器包裹iscroll-luo组件 **/}
-  		<div style={{ height: '500px' }}>
+  		<div style={{ height: '100vh' }}>
   			<IscrollLuo
   				id='id'
   				onPullDownRefresh={() => this.onDown()}
