@@ -1,5 +1,5 @@
 # iscroll-luo
-[![npm version](https://badge.fury.io/js/iscroll-luo.svg)](https://badge.fury.io/js/iscroll-luo)
+[![npm](https://img.shields.io/npm/v/iscroll-luo.svg)](https://www.npmjs.com/package/iscroll-luo)
 
 React组件、下拉刷新上拉加载更多、PC端移动端支持
 
