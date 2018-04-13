@@ -15,7 +15,7 @@ npm install --save iscroll
 npm install --save iscroll-luo
 ````
 
-## 2. 使用
+## 2. 完整例子
 
 ````bash
 import React from 'react';
@@ -25,20 +25,24 @@ class Test extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-    	data: [1, 2, 3],
+    	data: [1, 2, 3], // 初始数据
 	};
   }
 
-  onDown() {
+  /** 下拉刷新 **/
+  onDown() {
   	this.setState({
-  		data: [1, 2, 3],
+  		data: [1, 2, 3], // 覆盖原始数据
   	});
+	/** 注意此处，就算没有数据或接口调用失败了等情况，也要刷一下原始数据，Luo内部才知道状态更新了 **/
   }
 
+  /** 上拉加载更多 **/
   onUp() {
   	this.setState({
-  		data: [...this.state.data, 1, 2, 3],
+  		data: [...this.state.data, 1, 2, 3], // 在原始数据后面加更多数据
   	});
+	/** 注意此处，就算没有更多数据了或接口调用失败了等情况，也要刷一下原始数据，Luo内部才知道状态更新了 **/
   }
 
   render() {
