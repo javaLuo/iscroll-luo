@@ -1,11 +1,7 @@
-.iscroll-luo-box{ position:relative;display:block;width:100%;height:100%;overflow:hidden; }
+.iscroll-luo-box{ position:relative;display:block;width:100%;height:100%;overflow:hidden;touch-action:none; }
 .iscroll-luo-box .sl_scroller{ width:100%;height:100%;overflow:hidden;position:relative;}
 .iscroll-luo-box .sl_scroller>div{
 	min-height:calc(100% + 1px);
-	/*display:-webkit-flex;
-	display:-ms-flex;
-	display:flex;
-	flex-flow:column nowrap;*/
 	position:relative;
 	display:flex;
 	-webkit-user-select: none;

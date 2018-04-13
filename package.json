@@ -1,6 +1,6 @@
 {
   "name": "iscroll-luo",
-  "version": "1.0.20",
+  "version": "1.1.0",
   "description": "iscroll for react,pulldown refresh and pullup load more",
   "main": "dist/index.js",
   "scripts": {

@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import IScroll from 'iscroll/build/iscroll-probe';
 
 import iconSldown from './assets/icon_sldown.png';
@@ -45,20 +45,29 @@ class IscrollLuo extends React.Component {
         window.top.removeEventListener('mouseup', this, false);
         window.top.removeEventListener('touchend', this, false);
         if(t.myScroll.y >= t.state.options.beyondHeight) {
-          if(t.props.onPullDownRefresh) {
+          if(t.props.onDown || t.props.onPullDownRefresh) {
             t.setState({
               loadingDownShow: true,
               loadingUpShow: false,
             });
-            t.props.onPullDownRefresh();
+            if (t.props.onDown){
+                t.props.onDown();
+            } else if (t.props.onPullDownRefresh) {
+                t.props.onPullDownRefresh();
+            }
+
           }
         } else if (t.myScroll.y < t.myScroll.maxScrollY - t.state.options.beyondHeight) {
-          if(t.props.onPullUpLoadMore) {
+          if(t.props.onUp || t.props.onPullUpLoadMore) {
             t.setState({
               loadingDownShow: false,
               loadingUpShow: true,
             });
-            t.props.onPullUpLoadMore();
+            if(t.props.onUp) {
+                t.props.onUp();
+            } else if (t.props.onPullUpLoadMore) {
+                t.props.onPullUpLoadMore();
+            }
           }
         }
       }
@@ -218,15 +227,17 @@ class IscrollLuo extends React.Component {
   }
 }
 
-IscrollLuo.propTypes = {
-  id: PropTypes.string,                 // id
-  children: PropTypes.object,           // 数据
-  options: PropTypes.object,            // 自定义参数
-  iscrollOptions: PropTypes.object,     // iscroll原生参数
-  detectionHeight: PropTypes.bool,   // 是否不停的检测高度变化
-  className: PropTypes.string,          // 额外的class
-  onPullDownRefresh: PropTypes.func,    // 下拉刷新
-  onPullUpLoadMore: PropTypes.func,     // 上拉加载更多
-};
-
 export default IscrollLuo;
+
+/**
+ * id: PropTypes.string,                 // id
+ children: PropTypes.object,           // 数据
+ options: PropTypes.object,            // 自定义参数
+ iscrollOptions: PropTypes.object,     // iscroll原生参数
+ detectionHeight: PropTypes.bool,      // 是否不停的检测高度变化
+ className: PropTypes.string,          // 额外的class
+ onPullDownRefresh: PropTypes.func,    // 下拉刷新
+ onDown:    // 下拉刷新
+ onPullUpLoadMore: PropTypes.func,     // 上拉加载更多
+ onUp: // 上拉记载
+ * **/
