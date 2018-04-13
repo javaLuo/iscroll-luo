@@ -19,7 +19,7 @@ npm install --save iscroll-luo
 
 ````bash
 import React from 'react';
-import IscrollLuo from 'iscroll-luo';
+import Luo from 'iscroll-luo';
 
 class Test extends React.Component {
   constructor(props) {
@@ -45,17 +45,17 @@ class Test extends React.Component {
   	return (
 		{/** 务必用一个具有高度的容器包裹iscroll-luo组件 **/}
   		<div style={{ height: '100vh' }}>
-  			<IscrollLuo
+  			<Luo
   				id='id'
-  				onPullDownRefresh={() => this.onDown()}
-            			onPullUpLoadMore={() => this.onUp()}
+  				onDown={() => this.onDown()}
+            			onUp={() => this.onUp()}
   			>
   				{
 	  				this.state.data.map((v, i) =>
 	  					<div key={i}>{v}</div>
 	  				)
   				}						
-  			</IscrollLuo>
+  			</Luo>
   		</div>
   	);
   }
@@ -66,8 +66,8 @@ class Test extends React.Component {
 
 ````bash
 id  					# 必需 string	一个唯一的ID
-onPullDownRefresh			# 可选 func	触发下拉刷新时的回调函数
-onPullUpLoadMore			# 可选 func	触发上拉加载时的回调函数
+onDown					# 可选 func	触发下拉刷新时的回调函数
+onUp					# 可选 func	触发上拉加载时的回调函数
 className				# 可选 string	额外的class,会添加到iscroll-luo组件的包裹元素上
 detectionHeight       			# 可选 bool 	是否自动检测容器高度变化 默认false
 iscrollOptions: {			# 可选 object	iscroll的原生参数，初始化时会作为iscroll的options
@@ -79,7 +79,7 @@ options: {				# 可选 object	自定义参数
 	backgroundColor: '#f5f5f5',	# 背景颜色，是滑动底层的背景颜色
 	fontColor: '#888888', 		# 文字颜色，是下拉刷新、上拉加载那些文字的颜色
 	beyondHeight: 30,		# 超过此长度后触发下拉或上拉,单位px
-	pulldownInfo: '下拉刷新',	# 下拉刷新的文字
+	pulldownInfo: '下拉刷新',	     # 下拉刷新的文字
 	pulldownReadyInfo: '松开刷新',	# 触发下拉刷新的文字
 	pulldowningInfo: '刷新中…',	# 正在刷新中的文字
 	pullupInfo: '加载更多',		# 上拉加载的文字
