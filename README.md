@@ -106,7 +106,7 @@ options: {				# 可选 object	自定义参数
 
 ## 5. 演示案例
 
-http://isluo.com/iscroll-luo/index.html
+http://isluo.com/work/iscroll-luo/index.html
 
 ## 6. 参考
 
