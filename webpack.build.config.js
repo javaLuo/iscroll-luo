@@ -27,7 +27,8 @@ module.exports = {
                 test: /\.js$/,
                 loader: 'babel-loader',
                 query: {
-                	presets: ['es2015', 'stage-3', 'react']
+                	presets: ['env', 'react'],
+                    plugins: ['transform-class-properties']
                 },
                 include: [
                   path.join(__dirname, 'src')
@@ -75,7 +76,7 @@ module.exports = {
         },
         compress: {
             warnings: false, // 删除没有用的代码时是否发出警告
-            drop_console: true, // 是否删除所有的console
+            drop_console: false, // 是否删除所有的console
         },
     }),
     ]

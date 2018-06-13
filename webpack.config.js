@@ -10,7 +10,7 @@ module.exports = {
       test: /\.js$/,
       loader: 'babel-loader',
       query: {
-        presets: ['es2015', 'stage-3', 'react']
+        presets: ['env', 'react']
       },
       include: [
         path.join(__dirname, 'example')

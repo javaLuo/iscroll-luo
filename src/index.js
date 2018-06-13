@@ -1,5 +1,4 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
 import IScroll from 'iscroll/build/iscroll-probe';
 
 import iconSldown from './assets/icon_sldown.png';
@@ -19,7 +18,7 @@ class IscrollLuo extends React.Component {
       loadingUpShow: false, // 是否属于加载中状态
       iscrollOptions: { // iscroll 所需参数
         probeType: 3,
-        preventDefault: true,
+        preventDefault: false,
         click: true,
       },
       options: {
@@ -38,41 +37,40 @@ class IscrollLuo extends React.Component {
     this.timerRefresh = null; // 刷新iscroll的延时timer
     this.iscrollTimer = null; // 检测高度变化的timer
     this.myScroll = null; // 保存当前iscroll实例
-    this.onMouseUpListener = {
-      me: this,
-      handleEvent: function(e) {
-        const t = this.me;
-        window.top.removeEventListener('mouseup', this, false);
-        window.top.removeEventListener('touchend', this, false);
-        if(t.myScroll.y >= t.state.options.beyondHeight) {
-          if(t.props.onDown || t.props.onPullDownRefresh) {
-            t.setState({
-              loadingDownShow: true,
-              loadingUpShow: false,
-            });
-            if (t.props.onDown){
-                t.props.onDown();
-            } else if (t.props.onPullDownRefresh) {
-                t.props.onPullDownRefresh();
-            }
-
-          }
-        } else if (t.myScroll.y < t.myScroll.maxScrollY - t.state.options.beyondHeight) {
-          if(t.props.onUp || t.props.onPullUpLoadMore) {
-            t.setState({
-              loadingDownShow: false,
-              loadingUpShow: true,
-            });
-            if(t.props.onUp) {
-                t.props.onUp();
-            } else if (t.props.onPullUpLoadMore) {
-                t.props.onPullUpLoadMore();
-            }
-          }
-        }
-      }
-    }
   }
+
+    onMouseUpListener = () => {
+      const t = this;
+      console.log('在触发没有啊');
+        window.top.removeEventListener('mouseup', t.onMouseUpListener, false);
+        window.top.removeEventListener('touchend', t.onMouseUpListener, false);
+        if(t.myScroll.y >= t.state.options.beyondHeight) {
+            if(t.props.canDown !== false && (t.props.onDown || t.props.onPullDownRefresh)) {
+                console.log('不是设置成true了吗');
+                t.setState({
+                    loadingDownShow: true,
+                    loadingUpShow: false,
+                });
+                if (t.props.onDown){
+                    t.props.onDown();
+                } else if (t.props.onPullDownRefresh) {
+                    t.props.onPullDownRefresh();
+                }
+            }
+        } else if (t.myScroll.y < t.myScroll.maxScrollY - t.state.options.beyondHeight) {
+            if(t.props.canUp !== false && (t.props.onUp || t.props.onPullUpLoadMore)) {
+                t.setState({
+                    loadingDownShow: false,
+                    loadingUpShow: true,
+                });
+                if(t.props.onUp) {
+                    t.props.onUp();
+                } else if (t.props.onPullUpLoadMore) {
+                    t.props.onPullUpLoadMore();
+                }
+            }
+        }
+    };
 
   // 组件挂载完毕之前触发 初始化一些参数
   componentWillMount() {
@@ -115,6 +113,7 @@ class IscrollLuo extends React.Component {
       });
 
       this.myScroll.on('scrollStart', () => {
+          console.log('滑动开始了', window === window.top);
         window.top.addEventListener('mouseup', this.onMouseUpListener, false);
         window.top.addEventListener('touchend', this.onMouseUpListener, false);
       });
@@ -128,18 +127,38 @@ class IscrollLuo extends React.Component {
       }
   }
 
-  /* children内容改变时触发,表示已完成了刷新或加载 */
-  componentWillReceiveProps(nextProps) {
+  /** children内容改变时触发,表示已完成了刷新或加载 **/
+    componentWillReceiveProps(nextProps) {
     if(this.props.children !== nextProps.children) {
+        console.log('F2');
       this.setState({
         data: nextProps.children,
         loadingDownShow: false,
         loadingUpShow: false,
-      }, () => this.onRefresh());
+      });
     }
   }
 
-  /* 组件即将销毁时触发，销毁当前iscroll实例 */
+  /** children内容改变时触发,表示已完成了刷新或加载 **/
+    static getDerivedStateFromProps(nextP, prevState) {
+        if (nextP.children !== prevState.data) {
+            console.log('F3', nextP.children, prevState.data);
+            return {
+                data: nextP.children,
+                loadingDownShow: false,
+                loadingUpShow: false,
+            };
+        }
+        return null;
+    }
+
+    componentDidUpdate(prevP, prevS){
+      if(prevS.data !== this.state.data || prevP.canDown !== this.props.canDown || prevP.canUp !== this.props.canUp) {
+        this.onRefresh();
+      }
+    }
+
+  /** 组件即将销毁时触发，销毁当前iscroll实例 **/
   componentWillUnmount() {
     window.clearTimeout(this.iscrollTimer);
     this.myScroll.destroy();
@@ -183,6 +202,7 @@ class IscrollLuo extends React.Component {
   }
 
   render() {
+      console.log('为什么不行：', this.state.loadingDownShow, this.props.canDown, this.state.loadingDownShow && this.props.canDown !== false, this.state.loadingDownShow && this.props.canDown !== false ? 'sl_down sl_show' : 'sl_down');
     return (
       <div
         id={this.props.id}
@@ -190,7 +210,7 @@ class IscrollLuo extends React.Component {
         className={this.props.className ? `iscroll-luo-box ${this.props.className}` : 'iscroll-luo-box'}
         style={{ backgroundColor: this.state.options.backgroundColor }}
       >
-        <div className={this.state.loadingDownShow ? 'sl_down sl_show' : 'sl_down'} style={{ backgroundColor: this.state.options.backgroundColor, color: this.state.options.fontColor }}>
+        <div className={this.state.loadingDownShow && this.props.canDown !== false ? 'sl_down sl_show' : 'sl_down'} style={{ backgroundColor: this.state.options.backgroundColor, color: this.state.options.fontColor }}>
           <img src={iconLoading} />
           {this.state.options.pulldowningInfo}
         </div>
@@ -199,7 +219,7 @@ class IscrollLuo extends React.Component {
           className="sl_scroller"
         >
           <div>
-            <div className="scroller-pullDown">
+            <div className={this.props.canDown === false ? "scroller-pullDown hide" : "scroller-pullDown"} >
               <span className={this.state.yesDown ? 'icon reverse_icon' : 'icon'}>
                 <img src={iconSldown} />
               </span>
@@ -208,7 +228,7 @@ class IscrollLuo extends React.Component {
               </span>
             </div>
             <div className="scroller-content">{this.props.children}</div>
-            <div className="scroller-pullUp">
+            <div className={this.props.canUp === false ? "scroller-pullUp hide" : "scroller-pullUp"}>
               <span className={this.state.yesUp ? 'icon reverse_icon' : 'icon'}>
                 <img src={iconSlup} />
               </span>
@@ -218,7 +238,7 @@ class IscrollLuo extends React.Component {
             </div>
           </div>
         </div>
-        <div className={this.state.loadingUpShow ? 'sl_up sl_show' : 'sl_up'} style={{ backgroundColor: this.state.options.backgroundColor, color: this.state.options.fontColor }}>
+        <div className={this.state.loadingUpShow && this.props.canUp !== false ? 'sl_up sl_show' : 'sl_up'} style={{ backgroundColor: this.state.options.backgroundColor, color: this.state.options.fontColor }}>
           <img src={iconLoading} />
           {this.state.options.pullupingInfo}
         </div>
@@ -240,4 +260,6 @@ export default IscrollLuo;
  onDown:    // 下拉刷新
  onPullUpLoadMore: PropTypes.func,     // 上拉加载更多
  onUp: // 上拉记载
+ canDown
+ canUp
  * **/
