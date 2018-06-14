@@ -7,8 +7,8 @@ class Test extends React.Component {
     super(props);
     this.state = {
     	data: [1,2,3],
-        canUp: true,
-        canDown: true,
+        noUp: true,
+        noDown: true,
     };
   }
 
@@ -37,13 +37,13 @@ class Test extends React.Component {
   }
     onCanUp(){
       this.setState({
-          canUp: !this.state.canUp
+          noUp: !this.state.noUp
       })
     }
 
     onCanDown(){
         this.setState({
-            canDown: !this.state.canDown,
+            noDown: !this.state.noDown,
         })
     }
   render() {
@@ -52,8 +52,10 @@ class Test extends React.Component {
         <Luo key="0" id="test"
     			onDown={() => this.onDown()}
     			onUp={()=> this.onUp()}
-                canUp={this.state.canUp}
-                canDown={this.state.canDown}
+                noUp={this.state.noUp}
+                noDown={this.state.noDown}
+                noUpStr={"已全部加载完毕"}
+                noDownStr={"asfadfddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"}
     		>
   			<div>
   				{this.state.data.map((v, i) => {
@@ -61,8 +63,8 @@ class Test extends React.Component {
   				})}
   			</div>
   		</Luo>,
-        <button key="1" onClick={()=>this.onCanUp()}>canUp:{String(this.state.canUp)}</button>,
-        <button key="2" onClick={()=>this.onCanDown()}>canDown:{String(this.state.canDown)}</button>
+        <button key="1" onClick={()=>this.onCanUp()}>noUp:{String(this.state.noUp)}</button>,
+        <button key="2" onClick={()=>this.onCanDown()}>noDown:{String(this.state.noDown)}</button>
     ];
   }
 }

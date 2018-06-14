@@ -76,7 +76,7 @@ module.exports = {
         },
         compress: {
             warnings: false, // 删除没有用的代码时是否发出警告
-            drop_console: false, // 是否删除所有的console
+            drop_console: true, // 是否删除所有的console
         },
     }),
     ]

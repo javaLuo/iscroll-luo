@@ -18,7 +18,7 @@ class IscrollLuo extends React.Component {
       loadingUpShow: false, // 是否属于加载中状态
       iscrollOptions: { // iscroll 所需参数
         probeType: 3,
-        preventDefault: false,
+        preventDefault: true,
         click: true,
       },
       options: {
@@ -41,12 +41,11 @@ class IscrollLuo extends React.Component {
 
     onMouseUpListener = () => {
       const t = this;
-      console.log('在触发没有啊');
         window.top.removeEventListener('mouseup', t.onMouseUpListener, false);
         window.top.removeEventListener('touchend', t.onMouseUpListener, false);
-        if(t.myScroll.y >= t.state.options.beyondHeight) {
-            if(t.props.canDown !== false && (t.props.onDown || t.props.onPullDownRefresh)) {
-                console.log('不是设置成true了吗');
+        // 如果滑动距离超过了设定界限并且当前没在下拉中，就触发下拉
+        if(t.myScroll.y >= t.state.options.beyondHeight && !t.state.loadingDownShow) {
+            if(!t.props.noDown && (t.props.onDown || t.props.onPullDownRefresh)) {
                 t.setState({
                     loadingDownShow: true,
                     loadingUpShow: false,
@@ -57,8 +56,8 @@ class IscrollLuo extends React.Component {
                     t.props.onPullDownRefresh();
                 }
             }
-        } else if (t.myScroll.y < t.myScroll.maxScrollY - t.state.options.beyondHeight) {
-            if(t.props.canUp !== false && (t.props.onUp || t.props.onPullUpLoadMore)) {
+        } else if (t.myScroll.y < t.myScroll.maxScrollY - t.state.options.beyondHeight && !t.state.loadingUpShow) {
+            if(!t.props.noUp && (t.props.onUp || t.props.onPullUpLoadMore)) {
                 t.setState({
                     loadingDownShow: false,
                     loadingUpShow: true,
@@ -113,7 +112,6 @@ class IscrollLuo extends React.Component {
       });
 
       this.myScroll.on('scrollStart', () => {
-          console.log('滑动开始了', window === window.top);
         window.top.addEventListener('mouseup', this.onMouseUpListener, false);
         window.top.addEventListener('touchend', this.onMouseUpListener, false);
       });
@@ -130,7 +128,6 @@ class IscrollLuo extends React.Component {
   /** children内容改变时触发,表示已完成了刷新或加载 **/
     componentWillReceiveProps(nextProps) {
     if(this.props.children !== nextProps.children) {
-        console.log('F2');
       this.setState({
         data: nextProps.children,
         loadingDownShow: false,
@@ -142,7 +139,6 @@ class IscrollLuo extends React.Component {
   /** children内容改变时触发,表示已完成了刷新或加载 **/
     static getDerivedStateFromProps(nextP, prevState) {
         if (nextP.children !== prevState.data) {
-            console.log('F3', nextP.children, prevState.data);
             return {
                 data: nextP.children,
                 loadingDownShow: false,
@@ -153,7 +149,7 @@ class IscrollLuo extends React.Component {
     }
 
     componentDidUpdate(prevP, prevS){
-      if(prevS.data !== this.state.data || prevP.canDown !== this.props.canDown || prevP.canUp !== this.props.canUp) {
+      if(prevS.data !== this.state.data || prevP.noDown !== this.props.noDown || prevP.noUp !== this.props.noUp) {
         this.onRefresh();
       }
     }
@@ -202,7 +198,6 @@ class IscrollLuo extends React.Component {
   }
 
   render() {
-      console.log('为什么不行：', this.state.loadingDownShow, this.props.canDown, this.state.loadingDownShow && this.props.canDown !== false, this.state.loadingDownShow && this.props.canDown !== false ? 'sl_down sl_show' : 'sl_down');
     return (
       <div
         id={this.props.id}
@@ -210,7 +205,7 @@ class IscrollLuo extends React.Component {
         className={this.props.className ? `iscroll-luo-box ${this.props.className}` : 'iscroll-luo-box'}
         style={{ backgroundColor: this.state.options.backgroundColor }}
       >
-        <div className={this.state.loadingDownShow && this.props.canDown !== false ? 'sl_down sl_show' : 'sl_down'} style={{ backgroundColor: this.state.options.backgroundColor, color: this.state.options.fontColor }}>
+        <div className={this.state.loadingDownShow && !this.props.noDown ? 'sl_down sl_show' : 'sl_down'} style={{ backgroundColor: this.state.options.backgroundColor, color: this.state.options.fontColor }}>
           <img src={iconLoading} />
           {this.state.options.pulldowningInfo}
         </div>
@@ -219,26 +214,28 @@ class IscrollLuo extends React.Component {
           className="sl_scroller"
         >
           <div>
-            <div className={this.props.canDown === false ? "scroller-pullDown hide" : "scroller-pullDown"} >
-              <span className={this.state.yesDown ? 'icon reverse_icon' : 'icon'}>
+            <div className="scroller-pullDown">
+              <span className={this.state.yesDown ? 'icon reverse_icon' : 'icon'} style={{ display: this.props.noDown ? 'none' : 'inline' }}>
                 <img src={iconSldown} />
               </span>
-              <span className = "msg" style={{ color: this.state.options.fontColor }}>
+              <span className = "msg" style={{ color: this.state.options.fontColor, display: this.props.noDown ? 'none' : 'inline' }}>
                 {this.state.yesDown ? this.state.options.pulldownReadyInfo : this.state.options.pulldownInfo}
               </span>
+                <span className="msg" style={{ display: this.props.noDown ? 'inline' : 'none' }}>{this.props.noDownStr}</span>
             </div>
             <div className="scroller-content">{this.props.children}</div>
-            <div className={this.props.canUp === false ? "scroller-pullUp hide" : "scroller-pullUp"}>
-              <span className={this.state.yesUp ? 'icon reverse_icon' : 'icon'}>
+            <div className="scroller-pullUp">
+              <span className={this.state.yesUp ? 'icon reverse_icon' : 'icon'} style={{ display: this.props.noUp ? 'none' : 'inline' }}>
                 <img src={iconSlup} />
               </span>
-              <span className = "msg" style={{ color: this.state.options.fontColor }}>
+              <span className = "msg" style={{ color: this.state.options.fontColor, display: this.props.noUp ? 'none' : 'inline' }}>
                 {this.state.yesUp ? this.state.options.pullupReadyInfo : this.state.options.pullupInfo}
               </span>
+                <span className = "msg" style={{ display: this.props.noUp ? 'inline' : 'none' }}>{this.props.noUpStr}</span>
             </div>
           </div>
         </div>
-        <div className={this.state.loadingUpShow && this.props.canUp !== false ? 'sl_up sl_show' : 'sl_up'} style={{ backgroundColor: this.state.options.backgroundColor, color: this.state.options.fontColor }}>
+        <div className={this.state.loadingUpShow && !this.props.noUp ? 'sl_up sl_show' : 'sl_up'} style={{ backgroundColor: this.state.options.backgroundColor, color: this.state.options.fontColor }}>
           <img src={iconLoading} />
           {this.state.options.pullupingInfo}
         </div>
@@ -260,6 +257,8 @@ export default IscrollLuo;
  onDown:    // 下拉刷新
  onPullUpLoadMore: PropTypes.func,     // 上拉加载更多
  onUp: // 上拉记载
- canDown
- canUp
+ noDown
+ noUp
+ noDownStr
+ noUpStr
  * **/

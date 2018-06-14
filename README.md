@@ -54,7 +54,7 @@ class Test extends React.Component {
   render() {
   	return (
 		{/** 务必用一个具有高度的容器包裹iscroll-luo组件 **/}
-  		<div style={{ height: '100vh' }}>
+  		<div style={{ position: 'relative', height: '100vh' }}>
   			<Luo
   				id='id'
   				onDown={() => this.onDown()}
@@ -74,10 +74,14 @@ class Test extends React.Component {
 
 ## 3. 参数
 
-````bash
-id  					# 必需 string	一个唯一的ID
+````
+id  					# 必需 string 一个唯一的ID （在一个页面有多个Luo控件时比较重要）
 onDown					# 可选 func	触发下拉刷新时的回调函数
 onUp					# 可选 func	触发上拉加载时的回调函数
+noDown					# 可选 bool     是否关闭下拉刷新 默认false
+noUp					# 可选 bool     是否关闭上拉加载 默认false
+noDownStr				# 可选 string   关闭下拉刷新后，下拉区域显示的文字 默认无
+noUpStr					# 可选 string   关闭上拉加载后，上拉区域显示的文字 默认无
 className				# 可选 string	额外的class,会添加到iscroll-luo组件的包裹元素上
 detectionHeight       			# 可选 bool 	是否自动检测容器高度变化 默认false
 iscrollOptions: {			# 可选 object	iscroll的原生参数，初始化时会作为iscroll的options
@@ -101,8 +105,8 @@ options: {				# 可选 object	自定义参数
 ## 4. 特性
 
 * 传入iscroll-luo中的数据改变时，即this.props.children改变时，<br/>iscroll-luo认为已经成功刷新或成功加载更多了，iscroll-luo会刷新内部状态
-* 参数detectionHeight，设为true后，iscroll-luo会不停的检测容器的高度是否变化，<br/>如果变化了，则自动调用iscroll的refresh()方法
-* 在部分安卓手机上如果存在滑不动，或滑动卡顿的现象，请自行设置touch-action:none（写点css通过设置className即可）;
+* 参数detectionHeight，设为true后，iscroll-luo会不停的检测容器的高度是否变化，<br/>如果变化了，则自动调用iscroll的refresh()方法<br/>一般不需要开这个，除非有手动改变高度的需求。window的大小改变、手机的横屏竖屏切换，会自动刷新
+* this.props.children、this.props.noDown(关闭下拉)、this.props.noUp（关闭上拉） 这几个属性的值被改变时，都会刷新Luo内部的状态
 
 ## 5. 演示案例
 
