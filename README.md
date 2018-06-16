@@ -112,7 +112,10 @@ options: {				# 可选 object	自定义参数
 
 http://isluo.com/work/iscroll-luo/index.html
 
-## 6. 参考
+## 6. 更新日志
+* 1.2.3 用React16.4重新编译，去掉了旧的生命周期函数。请使用React16.0以上的版本。
+
+## 7. 参考
 
 iscroll官网： http://cubiq.org/iscroll-5 <br />
 iscroll中文API文档： http://www.cnblogs.com/leolai/articles/4204345.html
