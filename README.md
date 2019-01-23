@@ -31,24 +31,24 @@ class Test extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [1, 2, 3], // 初始数据
+      data: [1, 2, 3]
     };
   }
 
   /** 下拉刷新 **/
   onDown() {
     this.setState({
-      data: [1, 2, 3], // 覆盖原始数据
+      data: [1, 2, 3]
     });
-    /** 注意此处，就算没有数据或接口调用失败了等情况，也要刷一下原始数据，Luo内部才知道状态更新了 **/
+    /** 注意此处，就算没有数据或接口调用失败等情况，也要刷一下原始数据，Luo内部才知道状态更新了 **/
   }
 
   /** 上拉加载更多 **/
   onUp() {
     this.setState({
-      data: [...this.state.data, 1, 2, 3], // 在原始数据后面加更多数据
+      data: [...this.state.data, 4, 5, 6]
     });
-    /** 注意此处，就算没有更多数据了或接口调用失败了等情况，也要刷一下原始数据，Luo内部才知道状态更新了 **/
+    /** 注意此处，就算没有更多数据了或接口调用失败等情况，也要刷一下原始数据，Luo内部才知道状态更新了 **/
   }
 
   render() {
@@ -73,7 +73,7 @@ class Test extends React.Component {
 ## 3. 参数
 
 ````
-id  					# 必需 string 一个唯一的ID （在一个页面有多个Luo控件时比较重要）
+id  					# 必填 string 一个唯一的ID （在一个页面有多个Luo控件时比较重要）
 onDown					# 可选 func	触发下拉刷新时的回调函数
 onUp					# 可选 func	触发上拉加载时的回调函数
 noDown					# 可选 bool     是否关闭下拉刷新 默认false
@@ -108,7 +108,7 @@ options: {				# 可选 object	自定义参数
 
 ## 5. 演示案例
 
-http://isluo.com/work/iscroll-luo/index.html
+https://isluo.com/work/iscroll-luo/index.html
 
 ## 6. 更新日志
 * 1.2.3 用React16.4重新编译，去掉了旧的生命周期函数。请使用React16.0以上的版本。
