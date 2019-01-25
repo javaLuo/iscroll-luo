@@ -10,7 +10,7 @@ React组件
 
 ---
 
-![img](https://github.com/javaLuo/iscroll-luo/blob/master/public/d.gif)
+![img](public/d.gif)
 
 ---
 
