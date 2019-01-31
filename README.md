@@ -1,6 +1,6 @@
 # iscroll-luo
 [![npm](https://img.shields.io/npm/v/iscroll-luo.svg)](https://www.npmjs.com/package/iscroll-luo)
-[![npm](https://img.shields.io/npm/dy/iscroll-luo.svg)](https://www.npmjs.com/package/iscroll-luo)
+[![npm](https://img.shields.io/npm/dt/iscroll-luo.svg)](https://www.npmjs.com/package/iscroll-luo)
 <br/>
 React组件
 
