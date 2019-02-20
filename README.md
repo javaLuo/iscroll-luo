@@ -99,21 +99,30 @@ options: {				# 可选 object	自定义参数
 	pullupingInfo: '加载中…',	# 正在加载中的文字
 }
 ````
+## 4. 在PC端使用
+请把preventDefault设置为false:
+```
+<Luo
+  iscrollOptions={{
+  	preventDefault: false
+  }}
+>...</Luo>
+```
 
-## 4. 特性
+## 5. 特性
 
 * 传入iscroll-luo中的数据改变时，即this.props.children改变时，<br/>iscroll-luo认为已经成功刷新或成功加载更多了，iscroll-luo会刷新内部状态
 * 参数detectionHeight，设为true后，iscroll-luo会不停的检测容器的高度是否变化，<br/>如果变化了，则自动调用iscroll的refresh()方法<br/>一般不需要开这个，除非有手动改变高度的需求。window的大小改变、手机的横屏竖屏切换，会自动刷新
 * this.props.children、this.props.noDown(关闭下拉)、this.props.noUp（关闭上拉） 这几个属性的值被改变时，都会刷新Luo内部的状态
 
-## 5. 演示案例
+## 6. 演示案例
 
 https://isluo.com/work/iscroll-luo/index.html
 
-## 6. 更新日志
+## 7. 更新日志
 * 1.2.3 用React16.4重新编译，去掉了旧的生命周期函数。请使用React16.0以上的版本。
 
-## 7. 参考
+## 8. 参考
 
 iscroll官网： http://cubiq.org/iscroll-5 <br />
 iscroll中文API文档： http://www.cnblogs.com/leolai/articles/4204345.html
