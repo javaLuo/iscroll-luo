@@ -1,4 +1,4 @@
-# iscroll-luo 支持IE11+
+# iscroll-luo
 [![npm](https://img.shields.io/npm/v/iscroll-luo.svg)](https://www.npmjs.com/package/iscroll-luo)
 [![npm](https://img.shields.io/npm/dt/iscroll-luo.svg)](https://www.npmjs.com/package/iscroll-luo)
 <br/>
@@ -6,8 +6,8 @@ React组件
 
 下拉刷新上拉加载更多、PC端移动端支持
 
-依赖 iscroll5
-
+- 依赖 iscroll5
+- 支持IE11以上，因为IE10不支持Object.assign
 ---
 
 ![img](public/d.gif)
