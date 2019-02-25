@@ -1,4 +1,4 @@
-# iscroll-luo
+# iscroll-luo 支持IE11+
 [![npm](https://img.shields.io/npm/v/iscroll-luo.svg)](https://www.npmjs.com/package/iscroll-luo)
 [![npm](https://img.shields.io/npm/dt/iscroll-luo.svg)](https://www.npmjs.com/package/iscroll-luo)
 <br/>
