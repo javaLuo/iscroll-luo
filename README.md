@@ -124,6 +124,6 @@ https://isluo.com/work/iscroll-luo/index.html
 
 ## 8. 参考
 
-iscroll官网： http://cubiq.org/iscroll-5 <br />
+iscroll Github： https://github.com/cubiq/iscroll <br />
 iscroll中文API文档： http://www.cnblogs.com/leolai/articles/4204345.html
 
