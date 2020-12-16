@@ -1,7 +1,7 @@
-import React from 'react';
-// import Luo from '../../dist/index.js';
-import Luo from 'iscroll-luo';
-import ReactDom from 'react-dom';
+import React from "react";
+import Luo from "../../dist/index.js";
+// import Luo from 'iscroll-luo';
+import ReactDom from "react-dom";
 
 class Test extends React.Component {
   constructor(props) {
@@ -17,9 +17,9 @@ class Test extends React.Component {
   componentDidMount() {}
 
   onDown() {
-    console.log('触发了吗111');
+    console.log("触发了吗111");
     const t = this;
-    setTimeout(function() {
+    setTimeout(function () {
       t.setState({
         data: [1, 2, 3],
       });
@@ -28,8 +28,8 @@ class Test extends React.Component {
 
   onUp() {
     const t = this;
-    console.log('触发了吗');
-    setTimeout(function() {
+    console.log("触发了吗");
+    setTimeout(function () {
       t.setState({
         data: [...t.state.data, 1, 2, 3, 4, 5, 6],
       });
@@ -47,7 +47,7 @@ class Test extends React.Component {
     });
   }
   render() {
-    console.log('是个什么：', this.state.data);
+    console.log("是个什么：", this.state.data);
     return [
       <Luo
         key="0"
@@ -60,8 +60,8 @@ class Test extends React.Component {
         onUp={() => this.onUp()}
         noUp={this.state.noUp}
         noDown={this.state.noDown}
-        noUpStr={'已全部加载完毕'}
-        noDownStr={'asfadfdddddddddddd'}>
+        noUpStr={"已全部加载完毕"}
+        noDownStr={"asfadfdddddddddddd"}>
         <div>
           {this.state.data.map((v, i) => {
             return (
@@ -82,4 +82,4 @@ class Test extends React.Component {
   }
 }
 
-ReactDom.render(<Test />, document.getElementById('box'));
+ReactDom.render(<Test />, document.getElementById("box"));
